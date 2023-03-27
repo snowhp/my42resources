@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@42.porto.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/03/20 10:14:19 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:38:49 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,18 @@ static char	*ft_word(const char *str, char c)
 	return (res);
 }
 
-/* This function will behave like ft_split taking c as a separator but
-will join the what appears inside 2 cj char's.*/
+/* This function will split a string by give char c, but joining whats inside cj,
+if its a even number otherwise return 0*/
 char	**ft_joinsplit(char const *s, char c, char cj)
 {
 	int		wcount;
 	int		i;
 	char	**result;
 
-	wcount = ft_wcount(s, c, NULL);
+	wcount = ft_wcount(s, c, cj);
+	i = 0;
+	if((ft_countchars(s, cj) % 2) != 0)
+		return(0);
 	result = (char **)malloc((wcount + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
@@ -95,7 +98,7 @@ int	main()
 {
 	char	*s;
 
-	s = "teste string 'asda asd asd asd s' ola 'asda asd asd asd s' oasd ";
+	s = "teste string 'asda asd asd asd s' ola 'asda asd asd' asd s oasd ";
 	printf("%i", ft_wcount(s, ' ', 39));
 	/* char	*s;
 	char	c;

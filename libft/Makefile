@@ -41,6 +41,7 @@ SRCS = ft_strchr.c \
                           ft_int_putnbr.c \
                           ft_printf.c \
                           ft_joinsplit.c \
+                          ft_countchar.c \
 
 BNS_SRCS = ft_lstnew.c \
             ft_lstadd_front.c \
@@ -75,9 +76,5 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
-
-so:
-	$(CC) -nostartfiles -fPIC $(FLAGS) $(SRCS) $(BNS_SRCS)
-	$(CC) -nostartfiles -shared -o libft.so $(OBJS) $(BNS_OBJS)
 
 re: fclean all
