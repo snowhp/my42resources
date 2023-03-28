@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@42.porto.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/03/27 12:38:49 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/03/28 09:58:40 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,12 @@ char	**ft_joinsplit(char const *s, char c, char cj)
 	i = 0;
 	while (i < wcount)
 	{
-		while (*s != '\0' && *s == c)
+		while (*s == c)
 			s++;
-		result[i] = ft_word(s, c);
+		if(*s == cj)
+			result[i] = ft_word(s, c);
+		else
+			result[i] = ft_word(s, c);
 		s += ft_strlen(result[i++]);
 	}
 	result[i] = NULL;
@@ -96,24 +99,24 @@ char	**ft_joinsplit(char const *s, char c, char cj)
 #include <stdio.h>
 int	main()
 {
-	char	*s;
+	/* char	*s;
 
 	s = "teste string 'asda asd asd asd s' ola 'asda asd asd' asd s oasd ";
-	printf("%i", ft_wcount(s, ' ', 39));
-	/* char	*s;
+	printf("%i", ft_wcount(s, ' ', 39)); */
+	char	*s;
 	char	c;
 	char	cj;
 
-	s = "teste string 'asda s' ola";
+	s = "teste 'asdas' ola";
 	c = ' ';
 	cj = 39;
 
 	char **arr = ft_joinsplit(s, c, cj);
 	int i = 0;
-	while (arr[i] != 0)
+	while (arr[i])
 	{
 		printf("[%s]\n", arr[i]);      
 		i++;
 	}
-	return (0); */
+	return (0);
 }
