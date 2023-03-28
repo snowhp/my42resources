@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@42.porto.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/03/28 09:58:40 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/03/28 10:03:03 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ char	**ft_joinsplit(char const *s, char c, char cj)
 	return (result);
 }
 
-#include <stdio.h>
+/* #include <stdio.h>
 int	main()
 {
-	/* char	*s;
+	char	*s;
 
 	s = "teste string 'asda asd asd asd s' ola 'asda asd asd' asd s oasd ";
-	printf("%i", ft_wcount(s, ' ', 39)); */
+	printf("%i", ft_wcount(s, ' ', 39));
 	char	*s;
 	char	c;
 	char	cj;
@@ -119,4 +119,4 @@ int	main()
 		i++;
 	}
 	return (0);
-}
+} */
