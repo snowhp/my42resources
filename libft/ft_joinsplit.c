@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@42.porto.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/03/28 10:03:03 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/03/28 14:28:55 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,21 @@ static char	*ft_word(const char *str, char c)
 {
 	int		l;
 	int		i;
+	int		ctrl;
 	char	*res;
 
 	l = 0;
+	ctrl = 0;
 	while (str[l] != '\0' && str[l] != c)
+	{
+		if(str[l] == 39 && !ctrl)
+		{
+			ctrl = 1;
+			c = '\'';
+		}
+		l++;
+	}
+	if(c == '\'')
 		l++;
 	res = (char *)malloc(sizeof(char) * (l + 1));
 	if (!res)
@@ -96,18 +107,14 @@ char	**ft_joinsplit(char const *s, char c, char cj)
 	return (result);
 }
 
-/* #include <stdio.h>
+#include <stdio.h>
 int	main()
 {
-	char	*s;
-
-	s = "teste string 'asda asd asd asd s' ola 'asda asd asd' asd s oasd ";
-	printf("%i", ft_wcount(s, ' ', 39));
 	char	*s;
 	char	c;
 	char	cj;
 
-	s = "teste 'asdas' ola";
+	s = "awk '{count++} END {print count}'";
 	c = ' ';
 	cj = 39;
 
@@ -119,4 +126,4 @@ int	main()
 		i++;
 	}
 	return (0);
-} */
+}
