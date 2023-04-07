@@ -6,14 +6,38 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/04/07 13:19:20 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:17:30 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+int	ft_isquotes(char *str)
+{
+	if (str[0] == '\"' && str[1] == '\'')
+	{
+		if (str[2] == '\0')
+			return (0);
+		return (2);
+	}
+	else if (str[0] == '\"' && str[1] == '\'')
+	{
+		if (str[2] == '\0')
+			return (0);
+		return (2);
+	}
+	else if (str[0] == '\"' || str[0] == '\'')
+	{
+		if (str[1] == '\0')
+			return (0);
+		return (1);
+	}	
+	else
+		return (0);
+}
+
 /* Count numbers of words separated by 'c'.*/
-void	ft_wcount(const char *str, char c, char cj, int *wcount)
+void	ft_wcount(char *str, char c, int *wcount)
 {
 	int	i;
 	int	ctrl;
@@ -24,21 +48,21 @@ void	ft_wcount(const char *str, char c, char cj, int *wcount)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (!ctrl1 && str[i] == cj)
+		if (!ctrl1 && ft_isquotes(str + i))
 		{
 			ctrl1 = 1;
 			(*wcount)++;
 		}
-		else if (ctrl1 && str[i] == cj)
+		else if (ctrl1 && ft_isquotes(str + i))
 			ctrl1 = 0;
-		if (!ctrl && !ctrl1 && str[i] != c && str[i] != cj)
+		if (!ctrl && !ctrl1 && !ft_isquotes(str + i))
 		{
 			ctrl = 1;
 			(*wcount)++;
 		}
 		else if (ctrl && str[i] == c)
 			ctrl = 0;
-		i++;
+		i += ft_isquotes(str + i) + 1;
 	}
 }
 
@@ -79,10 +103,11 @@ static char	*ft_word(const char *str, char c)
 		res[i++] = *str++;
 	return (res);
 }
+#include <stdio.h>
 
 /* This function will split a string by give char c, but joining whats inside 
 cj, if its a even number otherwise return 0*/
-char	**ft_joinsplit(char const *s, char c, char cj)
+char	**ft_joinsplit(char *s, char c, char cj)
 {
 	int		wcount;
 	int		i;
@@ -91,7 +116,8 @@ char	**ft_joinsplit(char const *s, char c, char cj)
 	wcount = 0;
 	while (*s == ' ' || *s == '\t')
 		s++;
-	ft_wcount(s, c, cj, &wcount);
+	ft_wcount(s, c, &wcount);
+	printf("WC: %i\n", wcount);
 	if ((ft_countchar(s, cj) % 2) != 0)
 		return (0);
 	result = (char **)malloc((wcount + 1) * sizeof(char *));
@@ -111,20 +137,12 @@ char	**ft_joinsplit(char const *s, char c, char cj)
 	return (result);
 }
 
-#include <stdio.h>
 int	main()
 {
-	char	*s;
 	char	c;
 	char	cj;
-	char	*s1;
-	char	*s2;
-	char	*s3;
 
-	s3 = "awk '{count++} END {print count}'";
-	s1 = "awk \"{count++} END {print count}\"";
-	s2 = "awk '\"{count++} END {print count}\"'";
-	s = "awk \"'{count++} END {print count}'\"";
+	char *s3 = "awk \'{count++} END {print count}\'";
 	c = ' ';
 	cj = 39;
 
@@ -135,6 +153,9 @@ int	main()
 		printf("[%s]\n", arr[i]);      
 		i++;
 	}
+	char *s1 = "awk \"{count++} END {print count}\"";
+	char *s2 = "awk \'\"{count++} END {print count}\"\'";
+	char *s = "awk \"\'{count++} END {print count}'\"";
 	arr = ft_joinsplit(s1, c, cj);
 	i = 0;
 	while (arr[i])
