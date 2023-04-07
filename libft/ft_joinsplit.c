@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_joinsplit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@42.porto.com>           +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/03/28 15:38:33 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/04/07 13:19:20 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**ft_joinsplit(char const *s, char c, char cj)
 	while (*s == ' ' || *s == '\t')
 		s++;
 	ft_wcount(s, c, cj, &wcount);
-	if ((ft_countchars(s, cj) % 2) != 0)
+	if ((ft_countchar(s, cj) % 2) != 0)
 		return (0);
 	result = (char **)malloc((wcount + 1) * sizeof(char *));
 	if (!result)
@@ -111,24 +111,51 @@ char	**ft_joinsplit(char const *s, char c, char cj)
 	return (result);
 }
 
-/* #include <stdio.h>
+#include <stdio.h>
 int	main()
 {
 	char	*s;
 	char	c;
 	char	cj;
+	char	*s1;
+	char	*s2;
+	char	*s3;
 
-	s = "awk '{count++} END {print count}'";
+	s3 = "awk '{count++} END {print count}'";
+	s1 = "awk \"{count++} END {print count}\"";
+	s2 = "awk '\"{count++} END {print count}\"'";
+	s = "awk \"'{count++} END {print count}'\"";
 	c = ' ';
 	cj = 39;
 
-	char **arr = ft_joinsplit(s, c, cj);
+	char **arr = ft_joinsplit(s3, c, cj);
 	int i = 0;
 	while (arr[i])
 	{
 		printf("[%s]\n", arr[i]);      
 		i++;
 	}
+	arr = ft_joinsplit(s1, c, cj);
+	i = 0;
+	while (arr[i])
+	{
+		printf("[%s]\n", arr[i]);      
+		i++;
+	}
+	arr = ft_joinsplit(s2, c, cj);
+	i = 0;
+	while (arr[i])
+	{
+		printf("[%s]\n", arr[i]);      
+		i++;
+	}
+	arr = ft_joinsplit(s, c, cj);
+	i = 0;
+	while (arr[i])
+	{
+		printf("[%s]\n", arr[i]);      
+		i++;
+	}
+
 	return (0);
 }
- */
