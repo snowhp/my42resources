@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@42.porto.com>           +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:31:54 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/03/27 12:36:16 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/04/06 19:59:16 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ int		ft_int_putpointer(unsigned long n);
 int		ft_printf(const char *str, ...);
 int		ft_check(const char *str, va_list ap);
 char	**ft_joinsplit(char const *s, char c, char cj);
-int		ft_countchars(const char *str, char c);
+int		ft_countchar(const char *str, char c);
 
 #endif
