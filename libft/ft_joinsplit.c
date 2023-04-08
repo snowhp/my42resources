@@ -6,12 +6,16 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/04/08 18:37:52 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:53:55 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/* This function receives a string and a int that represents the way of return
+	ctrl = 0  - Returns the 0 if its last. Used in the beginning of the str
+	ctrl != 0 - Returns number of chars. Used for end of str
+*/
 int	ft_isquotes(char *str, int ctrl)
 {
 	if (str[0] == '\"' && str[1] == '\'')
@@ -20,7 +24,7 @@ int	ft_isquotes(char *str, int ctrl)
 			return (0);
 		return (2);
 	}
-	else if (str[0] == '\"' && str[1] == '\'')
+	else if (str[0] == '\'' && str[1] == '\"')
 	{
 		if (str[2] == '\0' && !ctrl)
 			return (0);
@@ -85,6 +89,8 @@ int	ft_checkchar(char *str, char c)
 		{
 			ctrl = 1;
 			extra += ft_isquotes((str + l), 0);
+			if(extra == 2)
+				l++;
 		}
 		l++;
 	}
@@ -106,7 +112,6 @@ static char	*ft_word(char *str, char c)
 	i = ft_isquotes(str, 1);//update based on first char
 	while(i-- > 0)
 		*str++;
-	
 	i = 0;
 	while (i < l)
 		res[i++] = *str++;
@@ -142,7 +147,7 @@ char	**ft_joinsplit(char *s, char c, char cj)
 	return (result);
 }
 
-int	main()
+/* int	main()
 {
 	char	c;
 	char	cj;
@@ -155,9 +160,11 @@ int	main()
 	int i = 0;
 	while (arr[i])
 	{
-		printf("[%s]\n", arr[i]);      
+		printf("[%s]\n", arr[i]);
+		free(arr[i]);  
 		i++;
 	}
+	free(arr);
 	char *s1 = "awk \"{count++} END {print count}\"";
 	char *s2 = "awk \'\"{count++} END {print count}\"\'";
 	char *s = "awk \"\'{count++} END {print count}'\"";
@@ -165,22 +172,28 @@ int	main()
 	i = 0;
 	while (arr[i])
 	{
-		printf("[%s]\n", arr[i]);      
+		printf("[%s]\n", arr[i]); 
+		free(arr[i]);     
 		i++;
 	}
+	free(arr);
 	arr = ft_joinsplit(s2, c, cj);
 	i = 0;
 	while (arr[i])
 	{
-		printf("[%s]\n", arr[i]);      
+		printf("[%s]\n", arr[i]);     
+		free(arr[i]); 
 		i++;
 	}
+	free(arr);
 	arr = ft_joinsplit(s, c, cj);
 	i = 0;
 	while (arr[i])
 	{
 		printf("[%s]\n", arr[i]);      
+		free(arr[i]);
 		i++;
 	}
+	free(arr);
 	return (0);
-}
+} */
