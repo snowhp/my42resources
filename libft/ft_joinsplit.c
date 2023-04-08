@@ -6,29 +6,29 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/04/07 16:17:30 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/04/08 14:39:58 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isquotes(char *str)
+int	ft_isquotes(char *str, int ctrl)
 {
 	if (str[0] == '\"' && str[1] == '\'')
 	{
-		if (str[2] == '\0')
+		if (str[2] == '\0' && !ctrl)
 			return (0);
 		return (2);
 	}
 	else if (str[0] == '\"' && str[1] == '\'')
 	{
-		if (str[2] == '\0')
+		if (str[2] == '\0' && !ctrl)
 			return (0);
 		return (2);
 	}
 	else if (str[0] == '\"' || str[0] == '\'')
 	{
-		if (str[1] == '\0')
+		if (str[1] == '\0' && !ctrl)
 			return (0);
 		return (1);
 	}	
@@ -48,46 +48,51 @@ void	ft_wcount(char *str, char c, int *wcount)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (!ctrl1 && ft_isquotes(str + i))
+		if (!ctrl1 && ft_isquotes((str + i), 0))
 		{
 			ctrl1 = 1;
 			(*wcount)++;
 		}
-		else if (ctrl1 && ft_isquotes(str + i))
+		else if (ctrl1 && ft_isquotes((str + i), 0))
 			ctrl1 = 0;
-		if (!ctrl && !ctrl1 && !ft_isquotes(str + i))
+		if (!ctrl && !ctrl1 && !ft_isquotes((str + i), 0))
 		{
 			ctrl = 1;
 			(*wcount)++;
 		}
 		else if (ctrl && str[i] == c)
 			ctrl = 0;
-		i += ft_isquotes(str + i) + 1;
+		i += ft_isquotes((str + i), 0) + 1;
 	}
 }
 
-int	ft_checkchar(const char *str, char c)
+int	ft_checkchar(char *str, char c)
 {
 	int		ctrl;
 	int		l;
+	int		extra;
 
 	l = 0;
 	ctrl = 0;
-	while (str[l] != '\0' && str[l] != c)
+	extra = 0;
+	while (str[l])
 	{
-		if (str[l] == 39 && !ctrl)
+		if(str[l] == c && !ctrl)//space e fora ctrl
+			break;
+		if (ft_isquotes((str + l), 1) && ctrl)//final
+			break;
+		if (ft_isquotes((str + l), 0) && !ctrl)//inicio 
 		{
 			ctrl = 1;
-			c = '\'';
+			extra += ft_isquotes((str + l), 0);
 		}
 		l++;
 	}
-	if (c == '\'')
-		l++;
-	return (l);
+	return (l - extra);
 }
+#include <stdio.h>
 
-static char	*ft_word(const char *str, char c)
+static char	*ft_word(char *str, char c)
 {
 	int		l;
 	int		i;
@@ -98,12 +103,11 @@ static char	*ft_word(const char *str, char c)
 	if (!res)
 		return (NULL);
 	res[l] = '\0';
-	i = 0;
+	i = ft_isquotes(str, 0);//update based on first char
 	while (i < l)
 		res[i++] = *str++;
 	return (res);
 }
-#include <stdio.h>
 
 /* This function will split a string by give char c, but joining whats inside 
 cj, if its a even number otherwise return 0*/
@@ -128,10 +132,7 @@ char	**ft_joinsplit(char *s, char c, char cj)
 	{
 		while (*s == c)
 			s++;
-		if (*s == cj)
-			result[i] = ft_word(s, c);
-		else
-			result[i] = ft_word(s, c);
+		result[i] = ft_word(s, c);
 		s += ft_strlen(result[i++]);
 	}
 	return (result);
@@ -153,7 +154,7 @@ int	main()
 		printf("[%s]\n", arr[i]);      
 		i++;
 	}
-	char *s1 = "awk \"{count++} END {print count}\"";
+	/* char *s1 = "awk \"{count++} END {print count}\"";
 	char *s2 = "awk \'\"{count++} END {print count}\"\'";
 	char *s = "awk \"\'{count++} END {print count}'\"";
 	arr = ft_joinsplit(s1, c, cj);
@@ -176,7 +177,6 @@ int	main()
 	{
 		printf("[%s]\n", arr[i]);      
 		i++;
-	}
-
+	} */
 	return (0);
 }
