@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/20 09:16:26 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/04/08 14:39:58 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/04/08 18:37:52 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,11 @@ static char	*ft_word(char *str, char c)
 	if (!res)
 		return (NULL);
 	res[l] = '\0';
-	i = ft_isquotes(str, 0);//update based on first char
+	i = ft_isquotes(str, 1);//update based on first char
+	while(i-- > 0)
+		*str++;
+	
+	i = 0;
 	while (i < l)
 		res[i++] = *str++;
 	return (res);
@@ -154,7 +158,7 @@ int	main()
 		printf("[%s]\n", arr[i]);      
 		i++;
 	}
-	/* char *s1 = "awk \"{count++} END {print count}\"";
+	char *s1 = "awk \"{count++} END {print count}\"";
 	char *s2 = "awk \'\"{count++} END {print count}\"\'";
 	char *s = "awk \"\'{count++} END {print count}'\"";
 	arr = ft_joinsplit(s1, c, cj);
@@ -177,6 +181,6 @@ int	main()
 	{
 		printf("[%s]\n", arr[i]);      
 		i++;
-	} */
+	}
 	return (0);
 }
