@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 08:47:38 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/05/26 08:47:48 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/05/26 08:54:11 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ void	ft_stderprint(char *str)
 
 	i = 0;
 	if (!str)
-		return (write(2, "(null)", 6));
+	{
+		write(2, "(null)", 6);
+		return ;
+	}
 	while (str[i] != '\0')
 		write(2, &str[i++], 1);
-	return (i);
+	return ;
 }
