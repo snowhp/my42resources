@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stderprint.c                                    :+:      :+:    :+:   */
+/*   ft_freearray.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 08:47:38 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/05/26 08:54:11 by tde-sous         ###   ########.fr       */
+/*   Created: 2023/05/29 15:16:00 by tde-sous          #+#    #+#             */
+/*   Updated: 2023/05/29 15:16:08 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_stderprint(char *str)
+void	ft_freearray(char **str)
 {
-	int	i;
+	int	x;
 
-	i = 0;
-	if (!str)
-	{
-		write(2, "(null)", 6);
-		return ;
-	}
-	while (str[i] != '\0')
-		write(2, &str[i++], 1);
-	return ;
+	x = 0;
+	while (str[x])
+		free(str[x++]);
+	free(str);
 }
